@@ -4,60 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>حساب ساعات الهيئة المعاونة</title>
+
 <style>
     *{box-sizing:border-box}
+
     body{
         margin:0;
         font-family:"Tahoma","Arial",sans-serif;
         background:#f4f6f9;
         color:#222;
     }
-    .container{max-width:1200px;margin:30px auto;padding:0 15px}
-    h1{text-align:center;margin-bottom:8px;color:#1f3b5b}
-    .subtitle{text-align:center;color:#666;margin-bottom:25px}
+
+    .container{
+        max-width:1200px;
+        margin:30px auto;
+        padding:0 15px
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:8px;
+        color:#1f3b5b
+    }
+
+    .subtitle{
+        text-align:center;
+        color:#666;
+        margin-bottom:25px
+    }
+
     .card{
-        background:#fff;border-radius:12px;padding:18px;
-        margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.08);
+        background:#fff;
+        border-radius:12px;
+        padding:18px;
+        margin-bottom:18px;
+        box-shadow:0 3px 12px rgba(0,0,0,.08);
         overflow-x:auto;
     }
-    table{width:100%;border-collapse:collapse;min-width:760px}
-    th,td{border:1px solid #d9dee5;padding:9px;text-align:center}
-    th{background:#1f3b5b;color:white}
-    tr.section td{background:#eaf0f6;font-weight:bold;color:#1f3b5b}
-    input{
-        width:100%;padding:7px;border:1px solid #bbb;border-radius:6px;
-        text-align:center;font-size:15px;
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        min-width:760px
     }
-    input:focus{outline:2px solid #8bb7dd;border-color:#4d89bd}
-    .hours{font-weight:bold;background:#f7f9fb}
+
+    th,td{
+        border:1px solid #d9dee5;
+        padding:9px;
+        text-align:center
+    }
+
+    th{
+        background:#1f3b5b;
+        color:white
+    }
+
+    tr.section td{
+        background:#eaf0f6;
+        font-weight:bold;
+        color:#1f3b5b
+    }
+
+    input, select{
+        width:100%;
+        padding:7px;
+        border:1px solid #bbb;
+        border-radius:6px;
+        text-align:center;
+        font-size:15px;
+    }
+
+    input:focus, select:focus{
+        outline:2px solid #8bb7dd;
+        border-color:#4d89bd
+    }
+
+    .hours{
+        font-weight:bold;
+        background:#f7f9fb
+    }
+
     .results{
-        display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
         gap:15px;
     }
+
     .result{
-        border:1px solid #d8e0e8;border-radius:10px;padding:15px;
-        background:#f9fbfd;text-align:center;
+        border:1px solid #d8e0e8;
+        border-radius:10px;
+        padding:15px;
+        background:#f9fbfd;
+        text-align:center;
     }
-    .result .label{color:#555;margin-bottom:8px}
-    .result .value{font-size:26px;font-weight:bold;color:#1f3b5b}
-    .actions{text-align:center;margin:20px 0}
+
+    .result .label{
+        color:#555;
+        margin-bottom:8px
+    }
+
+    .result .value{
+        font-size:26px;
+        font-weight:bold;
+        color:#1f3b5b
+    }
+
+    .settings{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+        gap:15px;
+    }
+
+    .setting{
+        background:#f9fbfd;
+        border:1px solid #d8e0e8;
+        border-radius:10px;
+        padding:15px;
+    }
+
+    .setting label{
+        display:block;
+        font-weight:bold;
+        color:#1f3b5b;
+        margin-bottom:8px;
+    }
+
+    .actions{
+        text-align:center;
+        margin:20px 0
+    }
+
     button{
-        border:0;border-radius:8px;padding:11px 20px;margin:4px;
-        cursor:pointer;font-size:15px;background:#1f3b5b;color:white;
+        border:0;
+        border-radius:8px;
+        padding:11px 20px;
+        margin:4px;
+        cursor:pointer;
+        font-size:15px;
+        background:#1f3b5b;
+        color:white;
     }
-    button.secondary{background:#6c757d}
-    .note{font-size:13px;color:#777;margin-top:10px}
+
+    button.secondary{
+        background:#6c757d
+    }
+
+    .note{
+        font-size:13px;
+        color:#777;
+        margin-top:10px
+    }
+
     @media(max-width:600px){
-        .container{margin-top:15px}
-        h1{font-size:24px}
+        .container{
+            margin-top:15px
+        }
+
+        h1{
+            font-size:24px
+        }
     }
 </style>
 </head>
+
 <body>
+
 <div class="container">
+
     <h1>حاسبة الساعات</h1>
     <div class="subtitle">قسم الفيزياء</div>
 
+    <!-- إعدادات المستخدم -->
+    <div class="card">
+        <h2>الإعدادات</h2>
+
+        <div class="settings">
+
+            <div class="setting">
+                <label for="staffCount">
+                    عدد الهيئة المعاونة الكلي
+                </label>
+
+                <input
+                    type="number"
+                    id="staffCount"
+                    value="26"
+                    min="1"
+                    step="1"
+                    oninput="calculate()"
+                >
+            </div>
+
+            <div class="setting">
+                <label for="roundDigits">
+                    تقريب الساعات
+                </label>
+
+                <select id="roundDigits" onchange="calculate()">
+                    <option value="0">أقرب عدد صحيح</option>
+                    <option value="1">منزلة عشرية واحدة</option>
+                    <option value="2" selected>منزلتان عشريتان</option>
+                    <option value="3">3 منازل عشرية</option>
+                    <option value="4">4 منازل عشرية</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="note">
+            عدد الهيئة المعاونة يدخل في حساب ساعات الفرد الواحد والهدف الكلي.
+        </div>
+    </div>
+
+    <!-- جدول البيانات -->
     <div class="card">
         <table>
             <thead>
@@ -70,48 +229,57 @@
                     <th>ساعات المعمل الكلية</th>
                 </tr>
             </thead>
+
             <tbody id="rows"></tbody>
         </table>
     </div>
 
+    <!-- النتائج -->
     <div class="card">
         <h2>النتائج</h2>
+
         <div class="results">
+
             <div class="result">
                 <div class="label">عدد الهيئة المعاونة الكلي</div>
                 <div class="value" id="staffTotal">26</div>
             </div>
+
             <div class="result">
                 <div class="label">عدد الساعات الكلي</div>
                 <div class="value" id="totalHours">0</div>
             </div>
+
             <div class="result">
                 <div class="label">عدد ساعات الفرد الواحد</div>
                 <div class="value" id="hoursPerPerson">0</div>
             </div>
+
             <div class="result">
                 <div class="label">تقريب الساعات</div>
                 <div class="value" id="roundedHours">0</div>
             </div>
-            <div class="result">
-                <div class="label">عدد الساعات المستهدف</div>
-                <div class="value" id="targetHours">676</div>
-            </div>
+
+        
             <div class="result">
                 <div class="label">فرق الساعات</div>
                 <div class="value" id="difference">0</div>
             </div>
+
         </div>
-           </div>
     </div>
 
     <div class="actions">
         <button onclick="calculate()">إعادة الحساب</button>
-        <button class="secondary" onclick="resetData()">إرجاع القيم الأصلية</button>
+        <button class="secondary" onclick="resetData()">
+            إرجاع القيم الأصلية
+        </button>
     </div>
+
 </div>
 
 <script>
+
 const originalData = [
     ["المستوى الأول - الترم الأول","ف101",25,2,4],
     ["المستوى الأول - الترم الثاني","ف102",0,2,4],
@@ -131,88 +299,199 @@ const originalData = [
     ["الإرشاد الأكاديمي","-",1,2,11]
 ];
 
-function buildRows(){
-    const tbody=document.getElementById("rows");
-    tbody.innerHTML="";
-    originalData.forEach((r,i)=>{
-        const tr=document.createElement("tr");
-        const level=document.createElement("td");
-        level.textContent=r[0];
-        const lab=document.createElement("td");
-        lab.textContent=r[1];
 
-        if(r[0]) {
-            level.className="section";
-            lab.className="section";
+function buildRows(){
+
+    const tbody = document.getElementById("rows");
+
+    tbody.innerHTML = "";
+
+    originalData.forEach((r,i)=>{
+
+        const tr = document.createElement("tr");
+
+        const level = document.createElement("td");
+        level.textContent = r[0];
+
+        const lab = document.createElement("td");
+        lab.textContent = r[1];
+
+        if(r[0]){
+            level.className = "section";
+            lab.className = "section";
         }
 
         tr.appendChild(level);
         tr.appendChild(lab);
 
         for(let j=2;j<=4;j++){
-            const td=document.createElement("td");
-            const inp=document.createElement("input");
-            inp.type="number";
-            inp.step="any";
-            inp.value=r[j];
-            inp.dataset.row=i;
-            inp.dataset.col=j;
+
+            const td = document.createElement("td");
+
+            const inp = document.createElement("input");
+
+            inp.type = "number";
+            inp.step = "any";
+            inp.value = r[j];
+
+            inp.dataset.row = i;
+            inp.dataset.col = j;
+
             inp.addEventListener("input",calculate);
+
             td.appendChild(inp);
             tr.appendChild(td);
         }
 
-        const h=document.createElement("td");
-        h.className="hours";
-        h.id="h"+i;
-        h.textContent="0";
+        const h = document.createElement("td");
+
+        h.className = "hours";
+        h.id = "h" + i;
+        h.textContent = "0";
+
         tr.appendChild(h);
+
         tbody.appendChild(tr);
     });
 }
 
+
 function getValue(i,j){
-    const el=document.querySelector(`input[data-row="${i}"][data-col="${j}"]`);
-    return parseFloat(el.value)||0;
+
+    const el = document.querySelector(
+        `input[data-row="${i}"][data-col="${j}"]`
+    );
+
+    return parseFloat(el.value) || 0;
 }
+
 
 function calculate(){
-    let total=0;
+
+    let total = 0;
+
+    /*
+     * حساب عدد الساعات الكلي
+     */
     originalData.forEach((r,i)=>{
-        const weekly=getValue(i,2);
-        const hours=getValue(i,3);
-        const staff=getValue(i,4);
-        const result=weekly*hours*staff;
-        document.getElementById("h"+i).textContent=format(result);
-        total+=result;
+
+        const weekly = getValue(i,2);
+        const hours = getValue(i,3);
+        const staff = getValue(i,4);
+
+        const result = weekly * hours * staff;
+
+        document.getElementById("h"+i).textContent =
+            format(result);
+
+        total += result;
     });
 
-    const staffTotal=26;
-    const perPerson=total/staffTotal;
-    const rounded=Math.round(perPerson);
-    const target=26*26;
-    const difference=target-total;
 
-    document.getElementById("staffTotal").textContent=staffTotal;
-    document.getElementById("totalHours").textContent=format(total);
-    document.getElementById("hoursPerPerson").textContent=format(perPerson,4);
-    document.getElementById("roundedHours").textContent=rounded;
-    document.getElementById("targetHours").textContent=target;
-    document.getElementById("difference").textContent=format(difference);
+    /*
+     * عدد الهيئة المعاونة أصبح قابل للتحكم
+     */
+    const staffTotal =
+        parseFloat(document.getElementById("staffCount").value) || 1;
+
+
+    /*
+     * حساب ساعات الفرد الواحد
+     */
+    const perPerson = total / staffTotal;
+
+
+    /*
+     * عدد المنازل العشرية للتقريب
+     */
+    const roundDigits =
+        parseInt(document.getElementById("roundDigits").value);
+
+
+    /*
+     * التقريب حسب اختيار المستخدم
+     *
+     * 0 = 26
+     * 1 = 26.3
+     * 2 = 26.27
+     * وهكذا
+     */
+    const rounded =
+        Math.round(perPerson * Math.pow(10,roundDigits))
+        / Math.pow(10,roundDigits);
+
+
+    /*
+     * الهدف أصبح مرتبطاً بعدد الهيئة المعاونة
+     *
+     * مثلاً:
+     * 26 موظف = 26 × 26 = 676
+     * 25 موظف = 25 × 26 = 650
+     * 30 موظف = 30 × 26 = 780
+     */
+    const target = staffTotal * 26;
+
+
+    /*
+     * الفرق بين الهدف والساعات الفعلية
+     */
+    const difference = target - total;
+
+
+    document.getElementById("staffTotal").textContent =
+        format(staffTotal,0);
+
+    document.getElementById("totalHours").textContent =
+        format(total);
+
+    document.getElementById("hoursPerPerson").textContent =
+        format(perPerson,4);
+
+    document.getElementById("roundedHours").textContent =
+        format(rounded,roundDigits);
+
+    document.getElementById("targetHours").textContent =
+        format(target);
+
+    document.getElementById("difference").textContent =
+        format(difference);
 }
 
+
 function format(n,digits=2){
-    if(Number.isInteger(n)) return n.toString();
+
+    if(Number.isInteger(n)){
+        return n.toString();
+    }
+
     return n.toFixed(digits).replace(/\.?0+$/,"");
 }
 
+
 function resetData(){
+
+    /*
+     * إعادة البيانات الأصلية
+     */
     buildRows();
+
+    /*
+     * إعادة إعدادات المستخدم للوضع الأصلي
+     */
+    document.getElementById("staffCount").value = 26;
+    document.getElementById("roundDigits").value = 2;
+
     calculate();
 }
 
+
+/*
+ * التشغيل الأول
+ */
 buildRows();
 calculate();
+
 </script>
+
 </body>
 </html>
