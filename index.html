@@ -65,7 +65,7 @@
         color:#1f3b5b
     }
 
-    input, select{
+    input{
         width:100%;
         padding:7px;
         border:1px solid #bbb;
@@ -74,7 +74,7 @@
         font-size:15px;
     }
 
-    input:focus, select:focus{
+    input:focus{
         outline:2px solid #8bb7dd;
         border-color:#4d89bd
     }
@@ -82,6 +82,26 @@
     .hours{
         font-weight:bold;
         background:#f7f9fb
+    }
+
+    .settings{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+        gap:15px;
+    }
+
+    .setting{
+        background:#f9fbfd;
+        border:1px solid #d8e0e8;
+        border-radius:10px;
+        padding:15px;
+    }
+
+    .setting label{
+        display:block;
+        font-weight:bold;
+        color:#1f3b5b;
+        margin-bottom:8px;
     }
 
     .results{
@@ -107,26 +127,6 @@
         font-size:26px;
         font-weight:bold;
         color:#1f3b5b
-    }
-
-    .settings{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-        gap:15px;
-    }
-
-    .setting{
-        background:#f9fbfd;
-        border:1px solid #d8e0e8;
-        border-radius:10px;
-        padding:15px;
-    }
-
-    .setting label{
-        display:block;
-        font-weight:bold;
-        color:#1f3b5b;
-        margin-bottom:8px;
     }
 
     .actions{
@@ -156,13 +156,8 @@
     }
 
     @media(max-width:600px){
-        .container{
-            margin-top:15px
-        }
-
-        h1{
-            font-size:24px
-        }
+        .container{margin-top:15px}
+        h1{font-size:24px}
     }
 </style>
 </head>
@@ -174,13 +169,17 @@
     <h1>حاسبة الساعات</h1>
     <div class="subtitle">قسم الفيزياء</div>
 
+
     <!-- إعدادات المستخدم -->
     <div class="card">
+
         <h2>الإعدادات</h2>
 
         <div class="settings">
 
+            <!-- عدد الهيئة المعاونة -->
             <div class="setting">
+
                 <label for="staffCount">
                     عدد الهيئة المعاونة الكلي
                 </label>
@@ -193,32 +192,42 @@
                     step="1"
                     oninput="calculate()"
                 >
+
             </div>
 
+
+            <!-- تقريب الساعات -->
             <div class="setting">
-                <label for="roundDigits">
+
+                <label for="roundHours">
                     تقريب الساعات
                 </label>
 
-                <select id="roundDigits" onchange="calculate()">
-                    <option value="0">أقرب عدد صحيح</option>
-                    <option value="1">منزلة عشرية واحدة</option>
-                    <option value="2" selected>منزلتان عشريتان</option>
-                    <option value="3">3 منازل عشرية</option>
-                    <option value="4">4 منازل عشرية</option>
-                </select>
+                <input
+                    type="number"
+                    id="roundHours"
+                    value="26"
+                    min="0"
+                    step="any"
+                    oninput="calculate()"
+                >
+
             </div>
 
         </div>
 
         <div class="note">
-            عدد الهيئة المعاونة يدخل في حساب ساعات الفرد الواحد والهدف الكلي.
+            أدخل عدد الساعات الذي تريد اعتماده للفرد الواحد في خانة "تقريب الساعات".
         </div>
+
     </div>
+
 
     <!-- جدول البيانات -->
     <div class="card">
+
         <table>
+
             <thead>
                 <tr>
                     <th>المستوى</th>
@@ -231,11 +240,15 @@
             </thead>
 
             <tbody id="rows"></tbody>
+
         </table>
+
     </div>
+
 
     <!-- النتائج -->
     <div class="card">
+
         <h2>النتائج</h2>
 
         <div class="results">
@@ -257,7 +270,7 @@
 
             <div class="result">
                 <div class="label">تقريب الساعات</div>
-                <div class="value" id="roundedHours">0</div>
+                <div class="value" id="roundedHours">26</div>
             </div>
 
             <div class="result">
@@ -271,20 +284,29 @@
             </div>
 
         </div>
+
     </div>
 
+
     <div class="actions">
-        <button onclick="calculate()">إعادة الحساب</button>
+
+        <button onclick="calculate()">
+            إعادة الحساب
+        </button>
+
         <button class="secondary" onclick="resetData()">
             إرجاع القيم الأصلية
         </button>
+
     </div>
 
 </div>
 
+
 <script>
 
 const originalData = [
+
     ["المستوى الأول - الترم الأول","ف101",25,2,4],
     ["المستوى الأول - الترم الثاني","ف102",0,2,4],
     ["المستوى الثاني - الترم الأول","ف201",12,4,4],
@@ -301,6 +323,7 @@ const originalData = [
     ["كمبيوتر - منفرد","ف247",1,2,2],
     ["السكاشن","-",42,2,1],
     ["الإرشاد الأكاديمي","-",1,2,11]
+
 ];
 
 
@@ -328,6 +351,7 @@ function buildRows(){
         tr.appendChild(level);
         tr.appendChild(lab);
 
+
         for(let j=2;j<=4;j++){
 
             const td = document.createElement("td");
@@ -344,8 +368,10 @@ function buildRows(){
             inp.addEventListener("input",calculate);
 
             td.appendChild(inp);
+
             tr.appendChild(td);
         }
+
 
         const h = document.createElement("td");
 
@@ -356,7 +382,9 @@ function buildRows(){
         tr.appendChild(h);
 
         tbody.appendChild(tr);
+
     });
+
 }
 
 
@@ -367,6 +395,7 @@ function getValue(i,j){
     );
 
     return parseFloat(el.value) || 0;
+
 }
 
 
@@ -374,8 +403,9 @@ function calculate(){
 
     let total = 0;
 
+
     /*
-     * حساب عدد الساعات الكلي
+     * حساب إجمالي الساعات
      */
     originalData.forEach((r,i)=>{
 
@@ -389,59 +419,59 @@ function calculate(){
             format(result);
 
         total += result;
+
     });
 
 
     /*
-     * عدد الهيئة المعاونة أصبح قابل للتحكم
+     * عدد الهيئة المعاونة الذي أدخله المستخدم
      */
     const staffTotal =
-        parseFloat(document.getElementById("staffCount").value) || 1;
+        parseFloat(
+            document.getElementById("staffCount").value
+        ) || 1;
 
 
     /*
-     * حساب ساعات الفرد الواحد
+     * ساعات الفرد الفعلية
      */
-    const perPerson = total / staffTotal;
+    const perPerson =
+        total / staffTotal;
 
 
     /*
-     * عدد المنازل العشرية للتقريب
-     */
-    const roundDigits =
-        parseInt(document.getElementById("roundDigits").value);
-
-
-    /*
-     * التقريب حسب اختيار المستخدم
+     * قيمة التقريب التي أدخلها المستخدم
      *
-     * 0 = 26
-     * 1 = 26.3
-     * 2 = 26.27
-     * وهكذا
+     * مثال:
+     * المستخدم يدخل 30
+     * إذن الساعات المعتمدة للفرد = 30
      */
-    const rounded =
-        Math.round(perPerson * Math.pow(10,roundDigits))
-        / Math.pow(10,roundDigits);
+    const roundedHours =
+        parseFloat(
+            document.getElementById("roundHours").value
+        ) || 0;
 
 
     /*
-     * الهدف أصبح مرتبطاً بعدد الهيئة المعاونة
+     * الهدف = عدد الهيئة × الساعات المعتمدة للفرد
      *
-     * مثلاً:
-     * 26 موظف = 26 × 26 = 676
-     * 25 موظف = 25 × 26 = 650
-     * 30 موظف = 30 × 26 = 780
+     * مثال:
+     * 26 هيئة × 30 ساعة = 780 ساعة
      */
-    const target = staffTotal * 26;
+    const target =
+        staffTotal * roundedHours;
 
 
     /*
-     * الفرق بين الهدف والساعات الفعلية
+     * الفرق بين الهدف والإجمالي الفعلي
      */
-    const difference = target - total;
+    const difference =
+        target - total;
 
 
+    /*
+     * عرض النتائج
+     */
     document.getElementById("staffTotal").textContent =
         format(staffTotal,0);
 
@@ -452,13 +482,14 @@ function calculate(){
         format(perPerson,4);
 
     document.getElementById("roundedHours").textContent =
-        format(rounded,roundDigits);
+        format(roundedHours);
 
     document.getElementById("targetHours").textContent =
         format(target);
 
     document.getElementById("difference").textContent =
         format(difference);
+
 }
 
 
@@ -469,29 +500,31 @@ function format(n,digits=2){
     }
 
     return n.toFixed(digits).replace(/\.?0+$/,"");
+
 }
 
 
 function resetData(){
 
     /*
-     * إعادة البيانات الأصلية
+     * إعادة بيانات الجدول
      */
     buildRows();
 
+
     /*
-     * إعادة إعدادات المستخدم للوضع الأصلي
+     * إعادة القيم الأصلية
      */
     document.getElementById("staffCount").value = 26;
-    document.getElementById("roundDigits").value = 2;
+
+    document.getElementById("roundHours").value = 26;
+
 
     calculate();
+
 }
 
 
-/*
- * التشغيل الأول
- */
 buildRows();
 calculate();
 
