@@ -170,14 +170,12 @@
     <div class="subtitle">قسم الفيزياء</div>
 
 
-    <!-- إعدادات المستخدم -->
     <div class="card">
 
         <h2>الإعدادات</h2>
 
         <div class="settings">
 
-            <!-- عدد الهيئة المعاونة -->
             <div class="setting">
 
                 <label for="staffCount">
@@ -196,7 +194,6 @@
             </div>
 
 
-            <!-- تقريب الساعات -->
             <div class="setting">
 
                 <label for="roundHours">
@@ -223,7 +220,6 @@
     </div>
 
 
-    <!-- جدول البيانات -->
     <div class="card">
 
         <table>
@@ -246,18 +242,12 @@
     </div>
 
 
-    <!-- النتائج -->
     <div class="card">
 
         <h2>النتائج</h2>
 
         <div class="results">
-
-            <div class="result">
-                <div class="label">عدد الهيئة المعاونة الكلي</div>
-                <div class="value" id="staffTotal">26</div>
-            </div>
-
+           
             <div class="result">
                 <div class="label">عدد الساعات الكلي</div>
                 <div class="value" id="totalHours">0</div>
@@ -267,17 +257,7 @@
                 <div class="label">عدد ساعات الفرد الواحد</div>
                 <div class="value" id="hoursPerPerson">0</div>
             </div>
-
-            <div class="result">
-                <div class="label">تقريب الساعات</div>
-                <div class="value" id="roundedHours">26</div>
-            </div>
-
-            <div class="result">
-                <div class="label">عدد الساعات المستهدف</div>
-                <div class="value" id="targetHours">676</div>
-            </div>
-
+          
             <div class="result">
                 <div class="label">فرق الساعات</div>
                 <div class="value" id="difference">0</div>
@@ -311,14 +291,14 @@ const originalData = [
     ["المستوى الأول - الترم الثاني","ف102",0,2,4],
     ["المستوى الثاني - الترم الأول","ف201",12,4,4],
     ["المستوى الثاني - الترم الثاني","ف202",0,4,4],
-    ["المستوى الثالث - مزدوج ترم أول","ف301",12,4,2],
     ["المستوى الثالث - منفرد ترم أول","ف303",1,6,3],
-    ["المستوى الثالث - مزدوج ترم ثاني","ف302",0,4,4],
     ["المستوى الثالث - منفرد ترم ","ف304",0,6,3],
-    ["المستوى الرابع - نووية مزدوج","ف401",4,4,2],
+    ["المستوى الثالث - مزدوج ترم أول","ف301",12,4,2],
+    ["المستوى الثالث - مزدوج ترم ثاني","ف302",0,4,4],
     ["المستوى الرابع - سوليد منفرد","ف403",1,6,2],
-    ["المستوى الرابع - سوليد مزدوج","ف402",1,4,2],
     ["المستوى الرابع - نووية منفرد","ف404",0,6,2],
+    ["المستوى الرابع - نووية مزدوج","ف401",4,4,2],
+    ["المستوى الرابع - سوليد مزدوج","ف402",1,4,2],
     ["++C","ف245",4,2,2],
     ["كمبيوتر - منفرد","ف247",1,2,2],
     ["السكاشن","-",42,2,1],
@@ -403,10 +383,6 @@ function calculate(){
 
     let total = 0;
 
-
-    /*
-     * حساب إجمالي الساعات
-     */
     originalData.forEach((r,i)=>{
 
         const weekly = getValue(i,2);
@@ -423,57 +399,27 @@ function calculate(){
     });
 
 
-    /*
-     * عدد الهيئة المعاونة الذي أدخله المستخدم
-     */
     const staffTotal =
         parseFloat(
             document.getElementById("staffCount").value
         ) || 1;
 
-
-    /*
-     * ساعات الفرد الفعلية
-     */
     const perPerson =
         total / staffTotal;
 
-
-    /*
-     * قيمة التقريب التي أدخلها المستخدم
-     *
-     * مثال:
-     * المستخدم يدخل 30
-     * إذن الساعات المعتمدة للفرد = 30
-     */
     const roundedHours =
         parseFloat(
             document.getElementById("roundHours").value
         ) || 0;
 
 
-    /*
-     * الهدف = عدد الهيئة × الساعات المعتمدة للفرد
-     *
-     * مثال:
-     * 26 هيئة × 30 ساعة = 780 ساعة
-     */
     const target =
         staffTotal * roundedHours;
 
 
-    /*
-     * الفرق بين الهدف والإجمالي الفعلي
-     */
     const difference =
         target - total;
 
-
-    /*
-     * عرض النتائج
-     */
-    document.getElementById("staffTotal").textContent =
-        format(staffTotal,0);
 
     document.getElementById("totalHours").textContent =
         format(total);
@@ -483,12 +429,6 @@ function calculate(){
 
     document.getElementById("roundedHours").textContent =
         format(roundedHours);
-
-    document.getElementById("targetHours").textContent =
-        format(target);
-
-    document.getElementById("difference").textContent =
-        format(difference);
 
 }
 
@@ -506,15 +446,9 @@ function format(n,digits=2){
 
 function resetData(){
 
-    /*
-     * إعادة بيانات الجدول
-     */
     buildRows();
 
 
-    /*
-     * إعادة القيم الأصلية
-     */
     document.getElementById("staffCount").value = 26;
 
     document.getElementById("roundHours").value = 26;
