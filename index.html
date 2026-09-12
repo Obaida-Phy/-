@@ -5,217 +5,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>حاسبة الساعات</title>
 <style>
-    *{box-sizing:border-box}
-    body{
-        margin:0;
-        font-family:"Tahoma","Arial",sans-serif;
-        background:#f4f6f9;
-        color:#222;
-    }
-    .container{max-width:1200px;margin:30px auto;padding:0 15px}
-    h1{text-align:center;margin-bottom:8px;color:#1f3b5b}
-    .subtitle{text-align:center;color:#666;margin-bottom:25px}
-    .card{
-        background:#fff;border-radius:12px;padding:18px;
-        margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.08);
-        overflow-x:auto;
-    }
-    table{width:100%;border-collapse:collapse;min-width:760px}
-    th,td{border:1px solid #d9dee5;padding:9px;text-align:center}
-    th{background:#1f3b5b;color:white}
-    tr.section td{background:#eaf0f6;font-weight:bold;color:#1f3b5b}
-    input{
-        width:100%;padding:7px;border:1px solid #bbb;border-radius:6px;
-        text-align:center;font-size:15px;
-    }
-    input:focus{outline:2px solid #8bb7dd;border-color:#4d89bd}
-    .hours{font-weight:bold;background:#f7f9fb}
-    .results{
-        display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-        gap:15px;
-    }
-    .result{
-        border:1px solid #d8e0e8;border-radius:10px;padding:15px;
-        background:#f9fbfd;text-align:center;
-    }
-    .result .label{color:#555;margin-bottom:8px}
-    .result .value{font-size:26px;font-weight:bold;color:#1f3b5b}
-    .actions{text-align:center;margin:20px 0}
-    button{
-        border:0;border-radius:8px;padding:11px 20px;margin:4px;
-        cursor:pointer;font-size:15px;background:#1f3b5b;color:white;
-    }
-    button.secondary{background:#6c757d}
-    .note{font-size:13px;color:#777;margin-top:10px}
-    @media(max-width:600px){
-        .container{margin-top:15px}
-        h1{font-size:24px}
-    }
+:root{--primary:#173f67;--secondary:#eef4f9;--border:#d5dee7;--text:#1f2933}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fa;color:var(--text);font-family:"Tahoma","Arial",sans-serif}
+.container{max-width:1250px;margin:25px auto;padding:0 15px}
+.header{background:linear-gradient(135deg,#173f67,#28658f);color:#fff;border-radius:16px;padding:25px;text-align:center;box-shadow:0 6px 18px #0001}
+.header h1{margin:0 0 8px;font-size:28px}.header p{margin:0;opacity:.9}
+.card{background:#fff;border-radius:14px;margin-top:18px;padding:18px;box-shadow:0 3px 14px #00000010}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th,td{border:1px solid var(--border);padding:10px;text-align:center}
+th{background:var(--primary);color:#fff;font-weight:700}
+.group td{background:var(--secondary);font-weight:700;color:var(--primary)}
+input{width:100%;min-width:85px;padding:8px;border:1px solid #b9c6d2;border-radius:7px;text-align:center;font-size:15px}
+input:focus{outline:2px solid #9cc4e3;border-color:#4d8fbe}
+.calc{font-weight:bold;background:#f8fafc}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
+.result{background:#f8fafc;border:1px solid var(--border);border-radius:11px;padding:16px;text-align:center}
+.label{font-size:14px;color:#64748b;margin-bottom:8px}.value{font-size:25px;font-weight:700;color:var(--primary)}
+.actions{text-align:center;margin-top:18px}
+button{border:0;border-radius:8px;padding:11px 20px;margin:4px;cursor:pointer;font-size:15px;background:var(--primary);color:white}
+button.reset{background:#687684}
+.note{font-size:13px;color:#64748b;line-height:1.8;margin-top:14px}
+@media print{
+ body{background:#fff}.actions{display:none}.card,.header{box-shadow:none}
+ input{border:0}.header{color:#000;background:#fff}
+}
 </style>
 </head>
 <body>
 <div class="container">
+  <div class="header">
     <h1>حاسبة الساعات</h1>
-    <div class="subtitle">حساب ساعات المعامل والهيئة المعاونة — مطابق لمنطق ملف Excel</div>
+    <p>حساب ساعات المعامل والهيئة المعاونة</p>
+  </div>
 
-    <div class="card">
-        <table>
-            <thead>
-                <tr>
-                    <th>المستوى</th>
-                    <th>المعامل</th>
-                    <th>عدد المعامل أسبوعياً</th>
-                    <th>ساعات المعمل الواحد</th>
-                    <th>الهيئة المعاونة في المعمل الواحد</th>
-                    <th>ساعات المعمل الكلية</th>
-                </tr>
-            </thead>
-            <tbody id="rows"></tbody>
-        </table>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>المستوى</th>
+            <th>المعامل</th>
+            <th>عدد المعامل أسبوعياً</th>
+            <th>ساعات المعمل الواحد</th>
+            <th>الهيئة المعاونة في المعمل الواحد</th>
+            <th>ساعات المعمل الكلية</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="card">
-        <h2>النتائج</h2>
-        <div class="results">
-            <div class="result">
-                <div class="label">عدد الهيئة المعاونة الكلي</div>
-                <div class="value" id="staffTotal">26</div>
-            </div>
-            <div class="result">
-                <div class="label">عدد الساعات الكلي</div>
-                <div class="value" id="totalHours">0</div>
-            </div>
-            <div class="result">
-                <div class="label">عدد ساعات الفرد الواحد</div>
-                <div class="value" id="hoursPerPerson">0</div>
-            </div>
-            <div class="result">
-                <div class="label">تقريب الساعات</div>
-                <div class="value" id="roundedHours">0</div>
-            </div>
-            <div class="result">
-                <div class="label">عدد الساعات المستهدف</div>
-                <div class="value" id="targetHours">676</div>
-            </div>
-            <div class="result">
-                <div class="label">فرق الساعات</div>
-                <div class="value" id="difference">0</div>
-            </div>
-        </div>
-        <div class="note">
-            يتم حساب ساعات كل صف بالمعادلة: عدد المعامل أسبوعياً × ساعات المعمل الواحد × الهيئة المعاونة في المعمل الواحد.
-            يتم توزيع إجمالي الساعات على 26 فرداً، ثم حساب الفرق وفقاً لمعادلة Excel.
-        </div>
+  <div class="card">
+    <h2>النتائج النهائية</h2>
+    <div class="results">
+      <div class="result"><div class="label">عدد الهيئة المعاونة الكلي</div><div class="value" id="staff">26</div></div>
+      <div class="result"><div class="label">عدد الساعات الكلي</div><div class="value" id="total">0</div></div>
+      <div class="result"><div class="label">عدد ساعات الفرد الواحد</div><div class="value" id="perPerson">0</div></div>
+      <div class="result"><div class="label">تقريب الساعات</div><div class="value" id="rounded">0</div></div>
+      <div class="result"><div class="label">إجمالي الساعات المستهدف</div><div class="value" id="target">0</div></div>
+      <div class="result"><div class="label">فرق الساعات</div><div class="value" id="difference">0</div></div>
     </div>
+    <div class="note">
+      المعادلات مطابقة لملف Excel: ساعات كل صف = الهيئة المعاونة × ساعات المعمل × عدد المعامل أسبوعياً.
+      إجمالي الساعات = مجموع ساعات جميع الصفوف. ساعات الفرد الواحد = إجمالي الساعات ÷ عدد الهيئة المعاونة.
+      فرق الساعات = (عدد الهيئة المعاونة × عدد الهيئة المعاونة) − إجمالي الساعات.
+    </div>
+  </div>
 
-    <div class="actions">
-        <button onclick="calculate()">إعادة الحساب</button>
-        <button class="secondary" onclick="resetData()">إرجاع القيم الأصلية</button>
-    </div>
+  <div class="actions">
+    <button onclick="window.print()">طباعة النتائج</button>
+    <button class="reset" onclick="resetData()">إرجاع القيم الأصلية</button>
+  </div>
 </div>
 
 <script>
-const originalData = [
-    ["المستوى الأول","ف101",25,2,4],
-    ["","ف102",0,2,4],
-    ["المستوى الثاني","ف201",12,4,4],
-    ["","ف202",0,4,4],
-    ["المستوى الثالث","ف301",12,4,2],
-    ["","ف303",1,6,3],
-    ["","ف302",0,4,4],
-    ["","ف304",0,6,3],
-    ["المستوى الرابع","ف401",4,4,2],
-    ["","ف403",1,6,2],
-    ["","ف402",1,4,2],
-    ["","ف404",0,6,2],
-    ["البرمجة","ف245",4,2,2],
-    ["","ف247",1,2,2],
-    ["السكاشن","-",42,2,1],
-    ["الإرشاد الأكاديمي","-",1,2,11]
+const rows = [
+ {level:"المستوى الأول",lab:"ف101",e:25,f:2,g:4},
+ {level:"",lab:"ف102",e:0,f:2,g:4},
+ {level:"المستوى الثاني",lab:"ف201",e:12,f:4,g:4},
+ {level:"",lab:"ف202",e:0,f:4,g:4},
+ {level:"المستوى الثالث",lab:"ف301",e:12,f:4,g:2},
+ {level:"",lab:"ف303",e:1,f:6,g:3},
+ {level:"",lab:"ف302",e:0,f:4,g:4},
+ {level:"",lab:"ف304",e:0,f:6,g:3},
+ {level:"المستوى الرابع",lab:"ف401",e:4,f:4,g:2},
+ {level:"",lab:"ف403",e:1,f:6,g:2},
+ {level:"",lab:"ف402",e:1,f:4,g:2},
+ {level:"",lab:"ف404",e:0,f:6,g:2},
+ {level:"البرمجة",lab:"ف245",e:4,f:2,g:2},
+ {level:"",lab:"ف247",e:1,f:2,g:2},
+ {level:"السكاشن",lab:"-",e:42,f:2,g:1},
+ {level:"الإرشاد الأكاديمي",lab:"-",e:1,f:2,g:11}
 ];
+const original = JSON.parse(JSON.stringify(rows));
+const staff = 26;
 
-function buildRows(){
-    const tbody=document.getElementById("rows");
-    tbody.innerHTML="";
-    originalData.forEach((r,i)=>{
-        const tr=document.createElement("tr");
-        const level=document.createElement("td");
-        level.textContent=r[0];
-        const lab=document.createElement("td");
-        lab.textContent=r[1];
-
-        if(r[0]) {
-            level.className="section";
-            lab.className="section";
-        }
-
-        tr.appendChild(level);
-        tr.appendChild(lab);
-
-        for(let j=2;j<=4;j++){
-            const td=document.createElement("td");
-            const inp=document.createElement("input");
-            inp.type="number";
-            inp.step="any";
-            inp.value=r[j];
-            inp.dataset.row=i;
-            inp.dataset.col=j;
-            inp.addEventListener("input",calculate);
-            td.appendChild(inp);
-            tr.appendChild(td);
-        }
-
-        const h=document.createElement("td");
-        h.className="hours";
-        h.id="h"+i;
-        h.textContent="0";
-        tr.appendChild(h);
-        tbody.appendChild(tr);
-    });
+function build(){
+ const tbody=document.getElementById("tbody"); tbody.innerHTML="";
+ rows.forEach((r,i)=>{
+   const tr=document.createElement("tr");
+   if(r.level) tr.className="group";
+   tr.innerHTML=`<td>${r.level}</td><td>${r.lab}</td>
+     <td><input type="number" step="any" value="${r.e}" data-i="${i}" data-k="e"></td>
+     <td><input type="number" step="any" value="${r.f}" data-i="${i}" data-k="f"></td>
+     <td><input type="number" step="any" value="${r.g}" data-i="${i}" data-k="g"></td>
+     <td class="calc" id="h${i}">0</td>`;
+   tbody.appendChild(tr);
+ });
+ document.querySelectorAll("input").forEach(x=>x.addEventListener("input",calc));
+ calc();
 }
-
-function getValue(i,j){
-    const el=document.querySelector(`input[data-row="${i}"][data-col="${j}"]`);
-    return parseFloat(el.value)||0;
+function val(i,k){
+ const x=document.querySelector(`input[data-i="${i}"][data-k="${k}"]`);
+ return Number(x.value)||0;
 }
-
-function calculate(){
-    let total=0;
-    originalData.forEach((r,i)=>{
-        const weekly=getValue(i,2);
-        const hours=getValue(i,3);
-        const staff=getValue(i,4);
-        const result=weekly*hours*staff;
-        document.getElementById("h"+i).textContent=format(result);
-        total+=result;
-    });
-
-    const staffTotal=26;
-    const perPerson=total/staffTotal;
-    const rounded=Math.round(perPerson);
-    const target=26*26;
-    const difference=target-total;
-
-    document.getElementById("staffTotal").textContent=staffTotal;
-    document.getElementById("totalHours").textContent=format(total);
-    document.getElementById("hoursPerPerson").textContent=format(perPerson,4);
-    document.getElementById("roundedHours").textContent=rounded;
-    document.getElementById("targetHours").textContent=target;
-    document.getElementById("difference").textContent=format(difference);
+function fmt(x){
+ if(Math.abs(x-Math.round(x))<1e-10) return String(Math.round(x));
+ return x.toFixed(4).replace(/0+$/,"").replace(/\.$/,"");
 }
-
-function format(n,digits=2){
-    if(Number.isInteger(n)) return n.toString();
-    return n.toFixed(digits).replace(/\.?0+$/,"");
+function calc(){
+ let total=0;
+ rows.forEach((r,i)=>{
+   const h=val(i,"e")*val(i,"f")*val(i,"g");
+   document.getElementById("h"+i).textContent=fmt(h);
+   total+=h;
+ });
+ const per=total/staff;
+ const target=staff*staff;
+ document.getElementById("staff").textContent=staff;
+ document.getElementById("total").textContent=fmt(total);
+ document.getElementById("perPerson").textContent=fmt(per);
+ document.getElementById("rounded").textContent=Math.round(per);
+ document.getElementById("target").textContent=target;
+ document.getElementById("difference").textContent=fmt(target-total);
 }
-
 function resetData(){
-    buildRows();
-    calculate();
+ rows.splice(0,rows.length,...JSON.parse(JSON.stringify(original)));
+ build();
 }
-
-buildRows();
-calculate();
+build();
 </script>
 </body>
 </html>
