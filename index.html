@@ -1,5 +1,41 @@
-<!DOCTYPE html> <html lang="ar" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>حساب ساعات الهيئة المعاونة</title> <style> :root{ --primary:#173f67; --secondary:#eef4f9; --border:#d5dee7; --text:#1f2933 } *{ box-sizing:border-box; font-family:"Times New Roman", Times, serif; } body{ margin:0; background:#f5f7fa; color:var(--text); font-family:"Times New Roman", Times, serif; } .container{ max-width:1250px; margin:25px auto; padding:0 15px; } .header{ background:linear-gradient(135deg,#173f67,#28658f); color:#fff; border-radius:16px; padding:25px; text-align:center; box-shadow:0 6px 18px #0001; } .header h1{ margin:0 0 8px; font-size:28px; } .header p{ margin:0; opacity:.9; } .card{ background:#fff; border-radius:14px; margin-top:18px; padding:18px; box-shadow:0 3px 14px #00000010; } .table-wrap{ overflow-x:auto; } table{ width:100%; border-collapse:collapse; min-width:850px; } th,td{ border:1px solid var(--border); padding:10px; text-align:center; } th{ background:var(--primary); color:#fff; font-weight:700; } .group td{ background:var(--secondary); font-weight:700; color:var(--primary); } input{ width:100%; min-width:85px; padding:8px; border:1px solid #b9c6d2; border-radius:7px; text-align:center; font-size:15px; font-family:"Times New Roman", Times, serif; } input:focus{ outline:2px solid #9cc4e3; border-color:#4d8fbe; } /* ساعات المعمل الواحد - للعرض فقط */ input.readonly{ background:#e9ecef; color:#495057; cursor:not-allowed; border-color:#c8cdd2; } .calc{ font-weight:bold; background:#f8fafc; } .results{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:13px; } .result{ background:#f8fafc; border:1px solid var(--border); border-radius:11px; padding:16px; text-align:center; } .label{ font-size:14px; color:#64748b; margin-bottom:8px; } .value{ font-size:25px; font-weight:700; color:var(--primary); } .actions{ text-align:center; margin-top:18px; } button{ border:0; border-radius:8px; padding:11px 20px; margin:4px; cursor:pointer; font-size:15px; background:var(--primary); color:white; font-family:"Times New Roman", Times, serif; } button.reset{ background:#687684; } /* رئيس مجلس القسم */ .department-head{ direction:rtl; text-align:left; margin-top:30px; padding-top:15px; border-top:1px solid var(--border); font-size:18px; line-height:1.8; } .department-head .title{ font-weight:bold; color:var(--primary); } .department-head .name{ font-weight:bold; } /* الطباعة */ @media print{ body{ background:#fff; } .actions{ display:none; } .card, .header{ box-shadow:none; } input{ border:0; } .header{ color:#000; background:#fff; } .readonly{ background:#fff !important; } } </style> </head> <body> <div class="container"> <!-- العنوان --> <div class="header"> <h1>حساب ساعات الهيئة المعاونة</h1> <p>قسم الفيزياء</p> </div> <!-- جدول البيانات --> <div class="card">
-<div class="table-wrap">
+<!DOCTYPE html> <html lang="ar" dir="rtl"> 
+  <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>حساب ساعات الهيئة المعاونة - قسم الفيزياء</title> 
+  
+<style> :root{ --primary:#173f67; --secondary:#eef4f9; --border:#d5dee7; --text:#1f2933 } 
+   *{ box-sizing:border-box; font-family:"Times New Roman", Times, serif; } 
+   body{ margin:0; background:#f5f7fa; color:var(--text); font-family:"Times New Roman", Times, serif; } 
+   .container{ max-width:1250px; margin:25px auto; padding:0 15px; } 
+   .header{ background:linear-gradient(135deg,#173f67,#28658f); color:#fff; border-radius:16px; padding:25px; text-align:center; 
+  
+box-shadow:0 6px 18px #0001; } .header h1{ margin:0 0 8px; font-size:28px; } .header p{ margin:0; opacity:.9; } 
+  .card{ background:#fff; border-radius:14px; margin-top:18px; padding:18px; box-shadow:0 3px 14px #00000010; } 
+  .table-wrap{ overflow-x:auto; } table{ width:100%; border-collapse:collapse; min-width:850px; } 
+   th,td{ border:1px solid var(--border); padding:10px; text-align:center; } 
+   th{ background:var(--primary); color:#fff; font-weight:700; } .group td{ background:var(--secondary); 
+
+                                                                           font-weight:700; color:var(--primary); } input{ width:100%; min-width:85px; padding:8px; border:1px solid #b9c6d2; 
+border-radius:7px; text-align:center; font-size:15px; font-family:"Times New Roman", Times, serif; } 
+
+input:focus{ outline:2px solid #9cc4e3; border-color:#4d8fbe; }
+input.readonly{ background:#e9ecef; color:#495057; cursor:not-allowed; border-color:#c8cdd2; } 
+  .calc{ font-weight:bold; background:#f8fafc; } .results{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); 
+  gap:13px; } .result{ background:#f8fafc; border:1px solid var(--border); border-radius:11px; padding:16px; text-align:center; } 
+  .label{ font-size:14px; color:#64748b; margin-bottom:8px; } .value{ font-size:25px; font-weight:700; color:var(--primary); } 
+  .actions{ text-align:center; margin-top:18px; } button{ border:0; border-radius:8px; padding:11px 20px; margin:4px; cursor:pointer;
+
+font-size:15px; background:var(--primary); color:white; font-family:"Times New Roman", Times, serif; } 
+button.reset{ background:#687684; } .department-head{ direction:rtl; text-align:left; 
+margin-top:30px; padding-top:15px; border-top:1px solid var(--border); font-size:18px; line-height:1.8; } 
+.department-head .title{ font-weight:bold; color:var(--primary); } .department-head .name{ font-weight:bold; }
+    
+    
+    @media print{ body{ background:#fff; } .actions{ display:none; } .card, .header{ box-shadow:none; } input{ border:0; } 
+      .header{ color:#000; background:#fff; } .readonly{ background:#fff !important; } } </style> </head> <body> <div class="container">
+       <div class="header"> <h1>حساب ساعات الهيئة المعاونة - قسم الفيزياء</h1> </div> <div class="card">
+
+  
+  <div class="table-wrap">
 
   <table>
 
@@ -20,12 +56,12 @@
 
 </div>
 
-</div> <!-- النتائج النهائية --> <div class="card">
+</div> 
+  <div class="card">
 <h2>النتائج النهائية</h2>
 
 <div class="results">
 
-  <!-- عدد الهيئة المعاونة الكلي -->
   <div class="result">
 
     <div class="label">
@@ -44,7 +80,6 @@
   </div>
 
 
-  <!-- عدد الساعات الكلي -->
   <div class="result">
 
     <div class="label">
@@ -58,7 +93,6 @@
   </div>
 
 
-  <!-- عدد ساعات الفرد الواحد -->
   <div class="result">
 
     <div class="label">
@@ -72,7 +106,6 @@
   </div>
 
 
-  <!-- تقريب الساعات - إدخال المستخدم -->
   <div class="result">
 
     <div class="label">
@@ -90,23 +123,7 @@
 
   </div>
 
-
-  <!-- إجمالي الساعات المستهدف -->
-  <div class="result">
-
-    <div class="label">
-      إجمالي الساعات المستهدف
-    </div>
-
-    <div class="value" id="target">
-      0
-    </div>
-
-  </div>
-
-
-  <!-- فرق الساعات -->
-  <div class="result">
+    <div class="result">
 
     <div class="label">
       فرق الساعات
@@ -121,7 +138,6 @@
 </div>
 
 
-<!-- رئيس مجلس القسم -->
 <div class="department-head">
 
   <div class="title">
@@ -135,7 +151,6 @@
 </div>
 
 
-<!-- الأزرار -->
 <div class="actions">
 
   <button onclick="window.print()">
@@ -148,4 +163,52 @@
 
 </div>
 
-</div> </div> <script> /* بيانات المعامل */ const rows = [ { level:"المستوى الأول - ترم أول", lab:"ف101", e:25, f:2, g:4 }, { level:"المستوى الأول - ترم ثاني", lab:"ف102", e:0, f:2, g:4 }, { level:"المستوى الثاني - ترم أول", lab:"ف201", e:12, f:4, g:4 }, { level:"المستوى الثاني - ترم ثاني", lab:"ف202", e:0, f:4, g:4 }, { level:"المستوى الثالث - منفرد ترم أول", lab:"ف303", e:1, f:6, g:3 }, { level:"المستوى الثالث - مزدوج ترم أول", lab:"ف301", e:12, f:4, g:2 }, { level:"المستوى الثالث - منفرد ترم ثاني", lab:"ف304", e:0, f:6, g:3 }, { level:"المستوى الثالث - مزدوج ترم ثاني", lab:"ف302", e:0, f:4, g:4 }, { level:"المستوى الرابع - سوليد منفرد", lab:"ف403", e:1, f:6, g:2 }, { level:"المستوى الرابع - نووية منفرد", lab:"ف404", e:0, f:6, g:2 }, { level:"المستوى الرابع - سوليد مزدوج", lab:"ف402", e:1, f:4, g:2 }, { level:"المستوى الرابع - نووية مزدوج", lab:"ف401", e:4, f:4, g:2 }, { level:"++C", lab:"ف245", e:4, f:2, g:2 }, { level:"كمبيوتر - منفرد", lab:"ف247", e:1, f:2, g:2 }, { level:"السكاشن", lab:"-", e:42, f:2, g:1 }, { level:"الإرشاد الأكاديمي", lab:"-", e:1, f:2, g:11 } ]; /* حفظ القيم الأصلية */ const original = JSON.parse(JSON.stringify(rows)); /* إنشاء الجدول */ function build(){ const tbody = document.getElementById("tbody"); tbody.innerHTML = ""; rows.forEach((r,i)=>{ const tr = document.createElement("tr"); if(r.level){ tr.className = "group"; } tr.innerHTML = ` <td> ${r.level} </td> <td> ${r.lab} </td> <!-- عدد المعامل أسبوعياً --> <td> <input type="number" step="any" value="${r.e}" data-i="${i}" data-k="e" > </td> <!-- ساعات المعمل الواحد - قراءة فقط --> <td> <input type="number" step="any" value="${r.f}" data-i="${i}" data-k="f" class="readonly" readonly tabindex="-1" > </td> <!-- الهيئة المعاونة في المعمل الواحد --> <td> <input type="number" step="any" value="${r.g}" data-i="${i}" data-k="g" > </td> <!-- ساعات المعمل الكلية --> <td class="calc" id="h${i}" > 0 </td> `; tbody.appendChild(tr); }); /* تفعيل الحساب عند تغيير: - عدد المعامل أسبوعياً - الهيئة المعاونة في المعمل الواحد أما ساعات المعمل الواحد فهي readonly */ document .querySelectorAll( "input[data-k='e'], input[data-k='g']" ) .forEach( x => x.addEventListener("input",calc) ); calc(); } /* قراءة قيمة من الجدول */ function val(i,k){ const x = document.querySelector( `input[data-i="${i}"][data-k="${k}"]` ); return Number(x.value) || 0; } /* تنسيق الأرقام */ function fmt(x){ if( Math.abs( x - Math.round(x) ) < 1e-10 ){ return String( Math.round(x) ); } return x .toFixed(4) .replace(/0+$/,"") .replace(/\.$/,""); } /* الحسابات */ function calc(){ let total = 0; /* حساب ساعات كل معمل: عدد المعامل أسبوعياً × ساعات المعمل الواحد × الهيئة المعاونة في المعمل الواحد */ rows.forEach((r,i)=>{ const h = val(i,"e") * val(i,"f") * val(i,"g"); document.getElementById("h"+i) .textContent = fmt(h); total += h; }); /* عدد الهيئة المعاونة الكلي من إدخال المستخدم */ const staff = Number( document.getElementById("staffInput").value ) || 0; /* تقريب الساعات من إدخال المستخدم */ const roundedHours = Number( document.getElementById("roundedInput").value ) || 0; /* عدد ساعات الفرد الواحد */ const per = staff > 0 ? total / staff : 0; /* إجمالي الساعات المستهدف = تقريب الساعات × عدد الهيئة المعاونة الكلي */ const target = roundedHours * staff; /* فرق الساعات = (تقريب الساعات × عدد الهيئة المعاونة الكلي) - عدد الساعات الكلي */ const difference = (roundedHours * staff) - total; /* عرض النتائج */ document.getElementById("total") .textContent = fmt(total); document.getElementById("perPerson") .textContent = fmt(per); document.getElementById("target") .textContent = fmt(target); document.getElementById("difference") .textContent = fmt(difference); } /* إعادة القيم الأصلية */ function resetData(){ rows.splice( 0, rows.length, ...JSON.parse( JSON.stringify(original) ) ); /* إعادة مدخلات المستخدم إلى القيم الافتراضية */ document.getElementById("staffInput") .value = 26; document.getElementById("roundedInput") .value = 0; build(); } /* تشغيل الصفحة */ build(); </script> </body> </html>
+</div> </div> <script> 
+  
+  const rows = 
+    [ { level:"المستوى الأول - ترم أول", lab:"ف101", e:25, f:2, g:4 }, 
+     { level:"المستوى الأول - ترم ثاني", lab:"ف102", e:0, f:2, g:4 }, 
+     { level:"المستوى الثاني - ترم أول", lab:"ف201", e:12, f:4, g:4 }, 
+     { level:"المستوى الثاني - ترم ثاني", lab:"ف202", e:0, f:4, g:4 }, 
+     { level:"المستوى الثالث - منفرد ترم أول", lab:"ف303", e:1, f:6, g:3 }, 
+     { level:"المستوى الثالث - مزدوج ترم أول", lab:"ف301", e:12, f:4, g:2 }, 
+     { level:"المستوى الثالث - منفرد ترم ثاني", lab:"ف304", e:0, f:6, g:3 },
+     { level:"المستوى الثالث - مزدوج ترم ثاني", lab:"ف302", e:0, f:4, g:4 }, 
+     { level:"المستوى الرابع - سوليد منفرد", lab:"ف403", e:1, f:6, g:2 }, 
+     { level:"المستوى الرابع - نووية منفرد", lab:"ف404", e:0, f:6, g:2 }, 
+     { level:"المستوى الرابع - سوليد مزدوج", lab:"ف402", e:1, f:4, g:2 }, 
+     { level:"المستوى الرابع - نووية مزدوج", lab:"ف401", e:4, f:4, g:2 },
+     { level:"++C", lab:"ف245", e:4, f:2, g:2 }, 
+     { level:"كمبيوتر - منفرد", lab:"ف247", e:1, f:2, g:2 },
+     { level:"السكاشن", lab:"-", e:42, f:2, g:1 }, 
+     { level:"الإرشاد الأكاديمي", lab:"-", e:1, f:2, g:11 } ];
+  
+  const original = JSON.parse(JSON.stringify(rows)); 
+  function build(){ const tbody = document.getElementById("tbody"); tbody.innerHTML = ""; 
+  rows.forEach((r,i)=>{ const tr = document.createElement("tr"); if(r.level){ tr.className = "group"; } 
+  tr.innerHTML = ` <td> ${r.level} </td> <td> ${r.lab} </td> 
+  <td> <input type="number" step="any" value="${r.e}" data-i="${i}" data-k="e" > </td> 
+  <td> <input type="number" step="any" value="${r.f}" data-i="${i}" data-k="f" class="readonly" readonly tabindex="-1" > </td> 
+  <td> <input type="number" step="any" value="${r.g}" data-i="${i}" data-k="g" > </td> 
+  <td class="calc" id="h${i}" > 0 </td> `; tbody.appendChild(tr); }); 
+  document .querySelectorAll( "input[data-k='e'], input[data-k='g']" ) .forEach( x => x.addEventListener("input",calc) ); calc(); }
+  function val(i,k){ const x = document.querySelector( `input[data-i="${i}"][data-k="${k}"]` ); return Number(x.value) || 0; }
+  function fmt(x){ if( Math.abs( x - Math.round(x) ) < 1e-10 ){ return String( Math.round(x) ); } return x .toFixed(4) .replace(/0+$/,"") .replace(/\.$/,""); }
+  function calc(){ let total = 0; 
+  rows.forEach((r,i)=>{ const h = val(i,"e") * val(i,"f") * val(i,"g"); document.getElementById("h"+i) .textContent = fmt(h); total += h; });
+  const staff = Number( document.getElementById("staffInput").value ) || 0;
+  const roundedHours = Number( document.getElementById("roundedInput").value ) || 0;
+  const per = staff > 0 ? total / staff : 0; 
+  const target = roundedHours * staff;
+  const difference = (roundedHours * staff) - total;
+                  
+     document.getElementById("total") .textContent = fmt(total); 
+     document.getElementById("perPerson") .textContent = fmt(per); 
+     document.getElementById("difference") .textContent = fmt(difference); }
+  
+  function resetData(){ rows.splice( 0, rows.length, ...JSON.parse( JSON.stringify(original) ) );
+  document.getElementById("staffInput") .value = 26; 
+  document.getElementById("roundedInput") .value = 0; 
+  
+  build(); }
+  build(); </script> </body> </html>
