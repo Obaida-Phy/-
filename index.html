@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حاسبة الساعات</title>
+<title>حساب ساعات الهيئة المعاونة</title>
 <style>
 :root{--primary:#173f67;--secondary:#eef4f9;--border:#d5dee7;--text:#1f2933}
 *{box-sizing:border-box}
@@ -36,8 +36,8 @@ button.reset{background:#687684}
 <body>
 <div class="container">
   <div class="header">
-    <h1>حاسبة الساعات</h1>
-    <p>حساب ساعات المعامل والهيئة المعاونة</p>
+    <h1>حساب ساعات الهيئة المعاونة</h1>
+    <p>قسم الفيزياء</p>
   </div>
 
   <div class="card">
@@ -68,12 +68,7 @@ button.reset{background:#687684}
       <div class="result"><div class="label">إجمالي الساعات المستهدف</div><div class="value" id="target">0</div></div>
       <div class="result"><div class="label">فرق الساعات</div><div class="value" id="difference">0</div></div>
     </div>
-    <div class="note">
-      المعادلات مطابقة لملف Excel: ساعات كل صف = الهيئة المعاونة × ساعات المعمل × عدد المعامل أسبوعياً.
-      إجمالي الساعات = مجموع ساعات جميع الصفوف. ساعات الفرد الواحد = إجمالي الساعات ÷ عدد الهيئة المعاونة.
-      فرق الساعات = (عدد الهيئة المعاونة × عدد الهيئة المعاونة) − إجمالي الساعات.
-    </div>
-  </div>
+
 
   <div class="actions">
     <button onclick="window.print()">طباعة النتائج</button>
@@ -83,18 +78,18 @@ button.reset{background:#687684}
 
 <script>
 const rows = [
- {level:"المستوى الأول",lab:"ف101",e:25,f:2,g:4},
- {level:"",lab:"ف102",e:0,f:2,g:4},
- {level:"المستوى الثاني",lab:"ف201",e:12,f:4,g:4},
- {level:"",lab:"ف202",e:0,f:4,g:4},
- {level:"المستوى الثالث",lab:"ف301",e:12,f:4,g:2},
- {level:"",lab:"ف303",e:1,f:6,g:3},
- {level:"",lab:"ف302",e:0,f:4,g:4},
- {level:"",lab:"ف304",e:0,f:6,g:3},
- {level:"المستوى الرابع",lab:"ف401",e:4,f:4,g:2},
- {level:"",lab:"ف403",e:1,f:6,g:2},
- {level:"",lab:"ف402",e:1,f:4,g:2},
- {level:"",lab:"ف404",e:0,f:6,g:2},
+ {level:"المستوى الأول - ترم أول",lab:"ف101",e:25,f:2,g:4},
+ {level:"المستوى الأول - ترم ثاني",lab:"ف102",e:0,f:2,g:4},
+ {level:"المستوى الثاني - ترم أول",lab:"ف201",e:12,f:4,g:4},
+ {level:"المستوى الثاني - ترم ثاني",lab:"ف202",e:0,f:4,g:4},
+ {level:"المستوى الثالث - مزدوج ترم ثاني",lab:"ف302",e:0,f:4,g:4},
+  {level:"المستوى الثالث - مزدوج ترم أول",lab:"ف301",e:12,f:4,g:2},
+ {level:"لمستوى الثالث - منفرد ترم أول",lab:"ف303",e:1,f:6,g:3},
+ {level:"لمستوى الثالث - منفرد ترم ثاني",lab:"ف304",e:0,f:6,g:3},
+ {level:"المستوى الرابع - سوليد منفرد",lab:"ف403",e:1,f:6,g:2},
+ {level:"المستوى الرابع - نووية منفرد",lab:"ف404",e:0,f:6,g:2},
+ {level:"المستوى الرابع - نووية مزدوج",lab:"ف401",e:4,f:4,g:2},
+ {level:"المستوى الرابع - سوليد مزدوج",lab:"ف402",e:1,f:4,g:2},
  {level:"البرمجة",lab:"ف245",e:4,f:2,g:2},
  {level:"",lab:"ف247",e:1,f:2,g:2},
  {level:"السكاشن",lab:"-",e:42,f:2,g:1},
